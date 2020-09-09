@@ -22,6 +22,7 @@ I also included (ellipse-area a b) if you want to calculate the area of an ellip
 
 Here's a way to get started using the clisp REPL:
 
+```
 [1]> (load 'ellipse-perimeter.lisp)
 ...snip...
 
@@ -35,6 +36,7 @@ Here's a way to get started using the clisp REPL:
            Google wisdom:  40.599434
 NIL
 [7]>
+```
 
 # License
 
