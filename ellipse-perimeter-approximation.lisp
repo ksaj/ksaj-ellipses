@@ -62,7 +62,7 @@ So, let's compare some approximations...
 ;;
 
 (defun ellipse-perimeter-ez1 (a b)
-             "2π√ab"
+        "2π√(a^2 + b^2)/2)"
 
   (* (+ pi pi) 
 
