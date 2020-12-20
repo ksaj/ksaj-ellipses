@@ -22,19 +22,15 @@ So, let's compare some approximations...
 (defun ellipse-perimeter-mp1 (a b)
  "perimeter ≈ π[53a/3 + 717b/35 - √(269a^2 + 667ab + 371b^2)]"
 
-  (if (>                      a b)
-      (ellipse-perimeter-mp1b a b)
-      (ellipse-perimeter-mp1b b a)))
-
-(defun ellipse-perimeter-mp1b (a b)
- "perimeter ≈ π[53a/3 + 717b/35 - √(269a^2 + 667ab + 371b^2)] springenverks"
+  (if (< a b)        ; Matt sez A must be larger than B
+    (rotatef a b))
 
   (* pi (- (+ (* 53  (/ a 3))
               (* 717 (/ b 35)))
 
            (sqrt (+ (* 269 (* a a))
-                 (* 667 a b)
-                 (* 371 (* b b)))))))
+                    (* 667 a b)
+                    (* 371 (* b b)))))))
 
 
 ; Exhibit B - the "lazy" one
@@ -42,12 +38,8 @@ So, let's compare some approximations...
 (defun ellipse-perimeter-mp2 (a b)
   "perimeter ≈ π(6a/5 + 3b/4)"
 
-  (if (>                      a b)
-      (ellipse-perimeter-mp2b a b)
-      (ellipse-perimeter-mp2b b a)))
-
-(defun ellipse-perimeter-mp2b (a b)
-  "perimeter ≈ π(6a/5 + 3b/4) springenverks"
+  (if (< a b)       ; Matt sez A must be larger than B
+    (rotatef a b))
 
   (* pi (+ (/ (* a 6) 
                    5)
@@ -62,7 +54,7 @@ So, let's compare some approximations...
 ;;
 
 (defun ellipse-perimeter-ez1 (a b)
-        "2π√((a^2 + b^2)/2)"
+       "2π√((a^2 + b^2)/2)"
 
   (* (+ pi pi) 
 
@@ -76,8 +68,8 @@ So, let's compare some approximations...
 ;;
 
 (defun ellipse-perimeter-ez2 (a b)
- "Google brings up a calculator when searching 'ellipse perimeter'.
-                  This is the equation they use."
+ "Google brings up a calculator when searching 'ellipse
+    perimeter.' This is the equation they provide."
 
   (* pi (+ a b)
 
@@ -85,8 +77,9 @@ So, let's compare some approximations...
 
                     (* (+ (* (+ a b) (+ a b))
 
-                       (+ 10 (sqrt (+ 4 (* -3 (/ (* (- a b) (- a b)) 
-                                        (* (+ a b) (+ a b))))))))))))))
+                       (+ (sqrt (+ 4 (* -3 (/ (* (- a b) (- a b)) 
+                                              (* (+ a b) (+ a b))))))
+                          10))))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -113,17 +106,12 @@ So, let's compare some approximations...
 (defun ellipse-perimeter-sr2 (a b)
  "perimeter ≈ π(a + b)(1 + (3h / (10 + √(4 - 3h))))"
 
-  (ellipse-perimeter-sr2b a b           ; 
-       (/ (* (- a b) (- a b))           ; Calculate h
-       (* (+ a b) (+ a b)))))           ; then call the blinkenverks
-
-(defun ellipse-perimeter-sr2b (a b h)
- "Blinkenverks for ellipse-perimeter-sr2"
+  (let ((h (/ (* (- a b) (- a b))        ; Calculate h
+              (* (+ a b) (+ a b)))))
 
   (* pi (+ a b)
         (1+ (/ (* 3 h)
-               (+ 10 (sqrt (- 4 (* 3 h))))))))
-
+               (+ 10 (sqrt (- 4 (* 3 h)))))))))
 
  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
